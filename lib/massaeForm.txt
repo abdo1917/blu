@@ -1,0 +1,51 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../modules/chat/chat_screen.dart';
+
+
+
+class MessageForm extends StatelessWidget {
+  const MessageForm({this.sender, this.text, required this.currentUser});
+
+  final String? sender;
+  final String? text;
+  final bool currentUser;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(10),
+      child: Column(
+        crossAxisAlignment:
+        currentUser ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+        children: [
+          Text('${signedInUser.email}', style: TextStyle(fontSize: 12, color: Colors.grey)),
+          Material(
+              elevation: 5,
+              borderRadius: currentUser
+                  ? BorderRadius.only(
+                  topLeft: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30))
+                  : BorderRadius.only(
+                  topRight: Radius.circular(30),
+                  bottomLeft: Radius.circular(30),
+                  bottomRight: Radius.circular(30)),
+              color: currentUser ? Colors.blue[800] : Colors.white,
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Text(
+                  '$text ',
+                  style: TextStyle(
+                      fontSize: 16,
+                      color: currentUser ? Colors.white : Colors.black),
+                ),
+              )),
+        ],
+      ),
+    );
+  }
+}
